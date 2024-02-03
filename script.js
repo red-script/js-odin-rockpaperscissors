@@ -1,14 +1,15 @@
 let playerSelection;
 let computerSelection;
+let score = 0;
 
-function playGame() {
-    for (let i = 0; i < 5; i++){
-        playerSelection = prompt("Enter Rock, Paper, or Scissor");
-        playerSelection = playerSelection.charAt(0).toUpperCase() + playerSelection.slice(1).toLowerCase();
-        getComputerChoice();
-        console.log(playRound(computerSelection, playerSelection));
-    }
-}
+const body = document.querySelector('body');
+const result = document.createElement('div');
+const log = document.createElement('p');
+const track = document.createElement('p');
+const win = document.createElement('p');
+const rock = document.querySelector('#rock');
+const paper = document.querySelector('#paper');
+const scissor = document.querySelector('#scissor');
 
 function getComputerChoice() {
     computerSelection = Math.floor(Math.random() * 3);
@@ -16,26 +17,69 @@ function getComputerChoice() {
 
 function playRound(computerSelection,playerSelection) {
     if (computerSelection === 0 && playerSelection === "Scissor") {
-        return "You Lose! Rock beats Scissor";
+        track.textContent = 'Score: ' + score;
+        log.textContent = 'You Lose! Rock beats Scissor';
+        if (score > 4) {
+            win.textContent = 'Congradulatiions! You Won';
+        }
     }
     else if (computerSelection === 1 && playerSelection === "Scissor") {
-        return "You Won! Scissor beats Paper";
+        score += 1;
+        track.textContent = 'Score: ' + score;
+        log.textContent = 'You Won! Scissor beats Paper';
+        if (score > 4) {
+            win.textContent = 'Congradulatiions! You Won';
+        }
     }
     else if (computerSelection === 0 && playerSelection === "Paper") {
-        return "You Won! Paper beats Rock";
+        score += 1;
+        track.textContent = 'Score: ' + score;
+        log.textContent = 'You Won! Paper beats Rock';
+        if (score > 4) {
+            win.textContent = 'Congradulatiions! You Won';
+        }
     }
     else if (computerSelection === 2 && playerSelection === "Paper") {
-        return "You Lost! Scissor beats Paper";
+        track.textContent = 'Score: ' + score;
+        log.textContent = 'You Lost! Scissor beats Paper';
+        if (score > 4) {
+            win.textContent = 'Congradulatiions! You Won';
+        }
     }
     else if (computerSelection === 1 && playerSelection === "Rock") {
-        return "You Lost! Paper beats Rock";
+        track.textContent = 'Score: ' + score;
+        log.textContent = 'You Lost! Paper beats Rock';
+        if (score > 4) {
+            win.textContent = 'Congradulatiions! You Won';
+        }
     }
     else if (computerSelection === 2 && playerSelection === "Rock") {
-        return "You Won! Rock beats Scissor";
+        score += 1;
+        track.textContent = 'Score: ' + score;
+        log.textContent = 'You Won! Rock beats Scissor';
+        if (score > 4) {
+            win.textContent = 'Congradulatiions! You Won';
+        }
     }
     else {
-        return "It's a draw";
+        track.textContent = 'Score: ' + score;
+        log.textContent = 'Its a draw';
     }
 }
+result.appendChild(log);
+result.appendChild(track);
+result.appendChild(win);
+body.appendChild(result);
 
-playGame();
+rock.addEventListener('click', () => {
+    getComputerChoice();
+    playRound(computerSelection, "Rock");
+});
+paper.addEventListener('click', () => {
+    getComputerChoice();
+    playRound(computerSelection, "Paper");
+});
+scissor.addEventListener('click', () => {
+    getComputerChoice();
+    playRound(computerSelection, "Scissor");
+});
